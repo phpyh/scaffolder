@@ -1,7 +1,7 @@
 services:
   php:
     # noinspection ComposeUnknownValues
-    image: ghcr.io/phpyh/php:${PHP_IMAGE_VERSION:?Make sure `PHP_IMAGE_VERSION` is declared in `.devcontainer/.env`}
+    image: ghcr.io/phpyh/php:${PHP_IMAGE_VERSION:?Make sure `PHP_IMAGE_VERSION` is declared in `.env`}
     user: ${CONTAINER_USER:-}
     environment:
       INSIDE_DEVCONTAINER: true
@@ -9,5 +9,5 @@ services:
       COMPOSER_CACHE_DIR: /workspace/var/.composer_cache
     tty: true
     volumes:
-      - ..:/workspace:cached
+      - .:/workspace:cached
     working_dir: /workspace

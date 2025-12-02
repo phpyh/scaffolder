@@ -23,13 +23,13 @@ enum Env implements Change
             
             MD;
 
-        if ($project->tryRead('.devcontainer/.env') === $contents) {
+        if ($project->tryRead('.env') === $contents) {
             return null;
         }
 
         return static fn(Cli $cli) => $cli->step(
-            'Write `.devcontainer/.env`...',
-            static fn() => $project->write('.devcontainer/.env', $contents),
+            'Write `.env`...',
+            static fn() => $project->write('.env', $contents),
         );
     }
 }

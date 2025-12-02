@@ -1,10 +1,7 @@
 SHELL ?= /bin/bash
 
 DOCKER ?= docker
-DOCKER_COMPOSE ?= $(DOCKER) compose \
-    --file .devcontainer/compose.yaml \
-    --env-file .devcontainer/.env \
-    $(shell test -f .devcontainer/.env.local && echo '--env-file .devcontainer/.env.local')
+DOCKER_COMPOSE ?= $(DOCKER) compose $(shell test -f .env.local && echo '--env-file .env --env-file .env.local')
 export CONTAINER_USER ?= $(shell id -u):$(shell id -g)
 
 RUN ?= $(if $(INSIDE_DEVCONTAINER),,$(DOCKER_COMPOSE) run --rm php)
