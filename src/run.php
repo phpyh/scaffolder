@@ -23,6 +23,7 @@ Fact\UserEmail::configureCommand($app);
 
 $app
     ->setCode(new Command([
+        Change\ComposerJson::Change,
         new Change\CopyFile(__DIR__ . '/../files/Makefile', 'Makefile'),
         Change\Readme::Change,
         new Change\CopyFile(__DIR__ . '/../files/compose.yaml', '.devcontainer/compose.yaml'),
@@ -41,7 +42,5 @@ $app
         new RemoveFile('.github/workflows/check.yml'),
         GitHubWorkflow::Change,
         new Change\CopyFile(__DIR__ . '/../files/infection.json5.dist', 'infection.json5.dist'),
-        Change\ComposerJson::Change,
-        Change\PHPUnit::Change,
     ]))
     ->run();

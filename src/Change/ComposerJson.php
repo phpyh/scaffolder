@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPyh\Scaffolder\Change;
 
+use Composer\Semver\Semver;
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
 use PHPyh\Scaffolder\Fact\Authors;
@@ -29,13 +30,19 @@ enum ComposerJson implements Change
         $new['name'] = $facts[Package::class];
         $new['description'] ??= $facts[Title::class];
         $new['type'] = $facts[PackageType::class];
-        $new['authors'] = $facts[Authors::class];
-        $new['require']['php'] = $facts[PhpConstraint::class]->getPrettyString();
-        $namespace = $facts[Namespace_::class];
-        $new['autoload']['psr-4'][$namespace . '\\'] = 'src/';
-        $new['autoload-dev']['psr-4'][$namespace . '\\'] = 'tests/';
+        $new['authors'] ??= $facts[Authors::class];
+        $new['require']['php'] ??= $facts[PhpConstraint::class]->getPrettyString();
         $new['config']['sort-packages'] = true;
         $new['license'] = $facts[License::class];
+
+        if (!$project->exists('composer.json')) {
+            $new['autoload']['psr-4'][$facts[Namespace_::class] . '\\'] = 'src/';
+            $new['autoload-dev']['psr-4'][$facts[Namespace_::class] . '\\'] = 'tests/';
+            $new['require-dev']['phpunit/phpunit'] = match (true) {
+                Semver::satisfies('8.2.9999999', $new['require']['php']) => '^11.5',
+                default => '^12.4',
+            };
+        }
 
         if ($new['type'] === PackageType::PROJECT) {
             unset($new['config']['lock']);
