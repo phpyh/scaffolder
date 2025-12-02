@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^8.4",
+        "ext-filter": "*",
         "composer/semver": "^3.4",
         "symfony/console": "^7.3",
         "symfony/filesystem": "^7.3",
