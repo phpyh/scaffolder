@@ -63,7 +63,7 @@ terminal: var ## Start a terminal inside the php container
 
 rescaffold:
 	$(DOCKER) run --pull always --volume $(shell pwd):$(shell pwd) --user $(CONTAINER_USER) --interactive --tty --rm ghcr.io/phpyh/scaffolder:latest $(shell pwd)
-	git add .
+	git add --all
 .PHONY: rescaffold
 
 ##
