@@ -29,7 +29,7 @@ final class UserEmail extends Fact implements CommandConfigurator
         \assert($default === null || \is_string($default));
 
         return $cli->ask(
-            question: 'Your name',
+            question: 'Your email',
             normalizer: static fn(string $input) => self::isValid($input) ? $input : null,
             default: $default,
         );
