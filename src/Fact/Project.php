@@ -115,7 +115,7 @@ final class Project extends Fact implements CommandConfigurator
      */
     public function execute(string $command): string
     {
-        exec("cd {$this->dir} && {$command} 2>&1", $lines, $code);
+        exec("cd {$this->dir} && {$command}", $lines, $code);
 
         $output = implode("\n", $lines);
 
