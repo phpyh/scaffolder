@@ -22,7 +22,7 @@ vendor: composer.json $(wildcard composer.lock)
 
 i: install-highest
 install-highest: ## Install highest Composer dependencies
-	$(COMPOSER) update
+	$(COMPOSER) install
 	@rm -f vendor/.lowest
 	@touch vendor
 .PHONY: i install-highest
