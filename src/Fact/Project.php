@@ -43,8 +43,6 @@ final class Project extends Fact implements CommandConfigurator
         parent::__construct();
     }
 
-    public string $basename { get => basename($this->dir); }
-
     public function locate(string $path): string
     {
         if ($this->fs->isAbsolutePath($path)) {

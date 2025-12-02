@@ -15,6 +15,7 @@ $app = new SingleCommandApplication();
 Fact\Project::configureCommand($app);
 Fact\PackageType::configureCommand($app);
 Fact\PackageVendor::configureCommand($app);
+Fact\PackageProject::configureCommand($app);
 Fact\PhpConstraint::configureCommand($app);
 Fact\Authors::configureCommand($app);
 Fact\License::configureCommand($app);

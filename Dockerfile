@@ -9,4 +9,6 @@ RUN --mount=type=cache,target=${COMPOSER_CACHE_DIR},uid=${UID},gid=${GID} <<EOF
     composer install --no-dev --classmap-authoritative
 EOF
 
+WORKDIR /project
+
 ENTRYPOINT ["tini", "--", "php", "/scaffolder/src/run.php"]
