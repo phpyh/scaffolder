@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPyh\Scaffolder\Fact;
 
+use Composer\Semver\Constraint\Constraint;
 use PHPyh\Scaffolder\Cli;
 use PHPyh\Scaffolder\Fact;
 use PHPyh\Scaffolder\Facts;
@@ -22,17 +23,14 @@ final class ImagePhpVersion extends Fact
 
     public static function resolve(Facts $facts, Cli $cli): string
     {
-        $lowerBound = $facts[PhpConstraint::class]->getLowerBound()->getVersion();
+        $php = $facts[PhpConstraint::class];
 
         foreach (self::VERSIONS as $version) {
-            if (str_contains($lowerBound, $version)) {
+            if ($php->matches(new Constraint('==', $version . '.9999999'))) {
                 return $version;
             }
         }
 
-        return $cli->askChoice(
-            question: 'PHP Docker image version',
-            choices: self::VERSIONS,
-        );
+        throw new \RuntimeException(\sprintf('No `phpyh/php` image matches `%s` constraint', $php->getPrettyString()));
     }
 }

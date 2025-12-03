@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PHPyh\Scaffolder\Change;
 
-use Composer\Semver\Semver;
+use Composer\Semver\Constraint\Constraint;
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
 use PHPyh\Scaffolder\Fact\Authors;
@@ -39,7 +39,7 @@ enum ComposerJson implements Change
             $new['autoload']['psr-4'][$facts[Namespace_::class] . '\\'] = 'src/';
             $new['autoload-dev']['psr-4'][$facts[Namespace_::class] . '\\'] = 'tests/';
             $new['require-dev']['phpunit/phpunit'] = match (true) {
-                Semver::satisfies('8.2.9999999', $new['require']['php']) => '^11.5',
+                $facts[PhpConstraint::class]->matches(new Constraint('==', '8.2.9999999')) => '^11.5',
                 default => '^12.4',
             };
         }
