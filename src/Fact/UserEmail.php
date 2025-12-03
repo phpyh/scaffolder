@@ -29,25 +29,26 @@ final class UserEmail extends Fact implements CommandConfigurator
         $default = $cli->getOption(self::DEFAULT_OPTION);
         \assert($default === null || \is_string($default));
 
-        $answer = $cli->ask(
+        return $cli->ask(
             question: 'Your email (n to skip)',
-            normalizer: static fn(string $input) => self::isValid($input) ? $input : null,
             default: $default,
+            normalizer: self::normalize(...),
         );
-
-        if ($answer === self::NULL_ANSWER) {
-            return null;
-        }
-
-        return $answer;
     }
 
     /**
-     * @phpstan-assert-if-true non-empty-string $email
+     * @return ?non-empty-string
      */
-    private static function isValid(string $email): bool
+    private static function normalize(string $email): ?string
     {
-        return $email === self::NULL_ANSWER
-            || filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+        if ($email === self::NULL_ANSWER) {
+            return null;
+        }
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
+            return $email;  // @phpstan-ignore return.type
+        }
+
+        throw new \InvalidArgumentException('Invalid email');
     }
 }

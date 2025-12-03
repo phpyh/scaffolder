@@ -29,7 +29,7 @@ final class PackageType extends Fact implements CommandConfigurator
     {
         $composerJson = $facts[ComposerJson::class];
 
-        if (isset($composerJson['type']) && self::isValid($composerJson['type'])) {
+        if (isset($composerJson['type'])) {
             return $composerJson['type'];
         }
 
@@ -37,17 +37,21 @@ final class PackageType extends Fact implements CommandConfigurator
         \assert(\is_string($default));
 
         return $cli->ask(
-            question: 'Package type',
-            normalizer: static fn(string $input): ?string => self::isValid($input) ? $input : null,
+            question: 'Package type, e.g. project or library',
             default: $default,
+            normalizer: self::normalize(...),
         );
     }
 
     /**
-     * @phpstan-assert-if-true non-empty-string $type
+     * @return non-empty-string
      */
-    private static function isValid(string $type): bool
+    private static function normalize(string $type): string
     {
-        return preg_match('~^[a-z0-9-]+$~D', $type) === 1;
+        if (preg_match('~^[a-z0-9-]+$~D', $type) === 1) {
+            return $type; // @phpstan-ignore return.type
+        }
+
+        throw new \InvalidArgumentException('Invalid package type');
     }
 }

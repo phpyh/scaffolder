@@ -12,7 +12,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * @extends Fact<string>
+ * @extends Fact<non-empty-string>
  */
 final class UserName extends Fact implements CommandConfigurator
 {
@@ -30,8 +30,10 @@ final class UserName extends Fact implements CommandConfigurator
 
         return $cli->ask(
             question: 'Your name',
-            normalizer: static fn(string $input) => $input,
             default: $default,
+            normalizer: static fn(string $input) => $input === ''
+                ? throw new \InvalidArgumentException('Name must not be empty')
+                : $input,
         );
     }
 }

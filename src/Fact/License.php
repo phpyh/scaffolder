@@ -36,8 +36,7 @@ final class License extends Fact implements CommandConfigurator
         \assert(\is_string($default));
 
         return $cli->ask(
-            question: 'License (`MIT`, `proprietary`, ...)',
-            normalizer: static fn(string $input) => $input,
+            question: 'License, e.g. MIT or proprietary',
             default: $default,
         );
     }

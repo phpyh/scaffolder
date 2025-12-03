@@ -27,25 +27,18 @@ final class PackageProject extends Fact
     {
         $composerJson = $facts[ComposerJson::class];
 
-        $project = explode('/', $composerJson['name'] ?? '')[1] ?? '';
-
-        if (self::isValid($project)) {
-            return $project;
+        if (isset($composerJson['name'])) {
+            try {
+                return self::normalize(explode('/', $composerJson['name'])[1] ?? '');
+            } catch (\InvalidArgumentException) {
+            }
         }
 
         return $cli->ask(
             question: 'Package project name (`amqp` in `thesis/amqp`)',
-            normalizer: static fn(string $input): ?string => self::isValid($input) ? $input : null,
             default: self::normalizeDefault($cli->getOption(self::DEFAULT_OPTION)),
+            normalizer: self::normalize(...),
         );
-    }
-
-    /**
-     * @phpstan-assert-if-true non-empty-string $project
-     */
-    private static function isValid(string $project): bool
-    {
-        return preg_match('~^' . self::PATTERN . '$~D', $project) === 1;
     }
 
     private static function normalizeDefault(mixed $default): ?string
@@ -55,5 +48,17 @@ final class PackageProject extends Fact
         }
 
         return null;
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    private static function normalize(string $project): string
+    {
+        if (preg_match('~^' . self::PATTERN . '$~D', $project) === 1) {
+            return $project; // @phpstan-ignore return.type
+        }
+
+        throw new \InvalidArgumentException('Invalid project name');
     }
 }

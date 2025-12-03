@@ -29,10 +29,11 @@ final class PhpConstraint extends Fact implements CommandConfigurator
     {
         $composerJson = $facts[ComposerJson::class];
 
-        $value = self::normalize($composerJson['require']['php'] ?? '');
-
-        if ($value !== null) {
-            return $value;
+        if (isset($composerJson['require']['php'])) {
+            try {
+                return self::normalize($composerJson['require']['php']);
+            } catch (\InvalidArgumentException) {
+            }
         }
 
         $default = $cli->getOption(self::DEFAULT_OPTION);
@@ -40,20 +41,20 @@ final class PhpConstraint extends Fact implements CommandConfigurator
 
         return $cli->ask(
             question: 'PHP constraint',
-            normalizer: self::normalize(...),
             default: $default,
+            normalizer: self::normalize(...),
         );
     }
 
-    private static function normalize(string $constraint): ?ConstraintInterface
+    private static function normalize(string $constraint): ConstraintInterface
     {
         /** @var VersionParser */
         static $parser = new VersionParser();
 
         try {
             return $parser->parseConstraints($constraint);
-        } catch (\Throwable) {
-            return null;
+        } catch (\Throwable $exception) {
+            throw new \InvalidArgumentException($exception->getMessage());
         }
     }
 }

@@ -49,21 +49,27 @@ final readonly class Cli
     }
 
     /**
-     * @template T of scalar|array|object
+     * @template T = string
      * @param non-empty-string $question
-     * @param callable(string): ?T $normalizer
+     * @param ?callable(string): T $normalizer
      * @return T
      */
-    public function ask(string $question, callable $normalizer, ?string $default = null): mixed
+    public function ask(string $question, ?string $default = null, ?callable $normalizer = null): mixed
     {
-        do {
-            $answer = $this->style->ask($question, $default) ?? '';
-            \assert(\is_string($answer));
+        $answer = $this->style->ask($question, $default) ?? '';
+        \assert(\is_string($answer));
 
-            $normalized = $normalizer($answer);
-        } while ($normalized === null);
+        if ($normalizer === null) {
+            return $answer; // @phpstan-ignore return.type
+        }
 
-        return $normalized;
+        try {
+            return $normalizer($answer);
+        } catch (\InvalidArgumentException $exception) {
+            $this->style->error($exception->getMessage());
+
+            return $this->ask($question, $default, $normalizer);
+        }
     }
 
     /**

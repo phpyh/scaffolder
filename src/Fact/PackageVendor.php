@@ -27,10 +27,11 @@ final class PackageVendor extends Fact implements CommandConfigurator
     {
         $composerJson = $facts[ComposerJson::class];
 
-        $value = explode('/', $composerJson['name'] ?? '')[0];
-
-        if (self::isValid($value)) {
-            return $value;
+        if (isset($composerJson['name'])) {
+            try {
+                return self::normalize(explode('/', $composerJson['name'])[0]);
+            } catch (\InvalidArgumentException) {
+            }
         }
 
         $default = $cli->getOption(self::DEFAULT_OPTION);
@@ -38,16 +39,20 @@ final class PackageVendor extends Fact implements CommandConfigurator
 
         return $cli->ask(
             question: 'Package vendor name (`thesis` in `thesis/amqp`)',
-            normalizer: static fn(string $input): ?string => self::isValid($input) ? $input : null,
             default: $default,
+            normalizer: self::normalize(...),
         );
     }
 
     /**
-     * @phpstan-assert-if-true non-empty-string $vendor
+     * @return non-empty-string
      */
-    private static function isValid(mixed $vendor): bool
+    private static function normalize(string $vendor): string
     {
-        return \is_string($vendor) && preg_match('~^[a-z0-9]([_.-]?[a-z0-9]+)*$~D', $vendor) === 1;
+        if (preg_match('~^[a-z0-9]([_.-]?[a-z0-9]+)*$~D', $vendor) === 1) {
+            return $vendor; // @phpstan-ignore return.type
+        }
+
+        throw new \InvalidArgumentException('Invalid vendor');
     }
 }

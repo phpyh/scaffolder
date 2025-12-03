@@ -13,6 +13,8 @@ use PHPyh\Scaffolder\Facts;
  */
 final class Namespace_ extends Fact
 {
+    private const string REGEX = '/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*+(?>\\\[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*+)++$/';
+
     public static function resolve(Facts $facts, Cli $cli): string
     {
         $composerJson = $facts[ComposerJson::class];
@@ -25,9 +27,18 @@ final class Namespace_ extends Fact
 
         return $cli->ask(
             question: 'Namespace',
-            normalizer: static fn(string $input) => $input,
             default: self::pascalize($facts[PackageVendor::class]) . '\\' . self::pascalize($facts[PackageProject::class]),
+            normalizer: self::normalize(...),
         );
+    }
+
+    private static function normalize(string $namespace): string
+    {
+        if ($namespace === '' || preg_match(self::REGEX, $namespace) === 1) {
+            return $namespace;
+        }
+
+        throw new \InvalidArgumentException('Invalid namespace');
     }
 
     private static function pascalize(string $name): string
