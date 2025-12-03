@@ -39,9 +39,16 @@ final class Authors extends Fact implements CommandConfigurator
             return json_decode($option, associative: true, flags: JSON_THROW_ON_ERROR);
         }
 
-        return [[
+        $author = [
             'name' => $facts[UserName::class],
-            'email' => $facts[UserEmail::class],
-        ]];
+        ];
+
+        $email = $facts[UserEmail::class];
+
+        if ($email !== null) {
+            $author['email'] = $email;
+        }
+
+        return [$author];
     }
 }

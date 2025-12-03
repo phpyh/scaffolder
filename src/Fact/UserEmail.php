@@ -12,11 +12,12 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * @extends Fact<non-empty-string>
+ * @extends Fact<?non-empty-string>
  */
 final class UserEmail extends Fact implements CommandConfigurator
 {
     private const string DEFAULT_OPTION = 'user-email-default';
+    private const string NULL_ANSWER = 'n';
 
     public static function configureCommand(Command $command): void
     {
@@ -28,11 +29,17 @@ final class UserEmail extends Fact implements CommandConfigurator
         $default = $cli->getOption(self::DEFAULT_OPTION);
         \assert($default === null || \is_string($default));
 
-        return $cli->ask(
-            question: 'Your email',
+        $answer = $cli->ask(
+            question: 'Your email (n to skip)',
             normalizer: static fn(string $input) => self::isValid($input) ? $input : null,
             default: $default,
         );
+
+        if ($answer === self::NULL_ANSWER) {
+            return null;
+        }
+
+        return $answer;
     }
 
     /**
@@ -40,6 +47,7 @@ final class UserEmail extends Fact implements CommandConfigurator
      */
     private static function isValid(string $email): bool
     {
-        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+        return $email === self::NULL_ANSWER
+            || filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
     }
 }
