@@ -6,7 +6,7 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
-use PHPyh\Scaffolder\Fact\ImagePhpVersion;
+use PHPyh\Scaffolder\Fact\PhpImageVersions;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Facts;
 
@@ -19,7 +19,7 @@ enum Env implements Change
         $contents = <<<MD
             # Put env variables defaults here
             # Override locally in gitignored .env.local
-            PHP_IMAGE_VERSION={$facts[ImagePhpVersion::class]}
+            PHP_IMAGE_VERSION={$facts[PhpImageVersions::class][0]}
             
             MD;
 
