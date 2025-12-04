@@ -38,10 +38,9 @@ enum ComposerJson implements Change
         if (!$project->exists('composer.json')) {
             $new['autoload']['psr-4'][$facts[Namespace_::class] . '\\'] = 'src/';
             $new['autoload-dev']['psr-4'][$facts[Namespace_::class] . '\\'] = 'tests/';
-            $new['require-dev']['phpunit/phpunit'] = match (true) {
-                $facts[PhpConstraint::class]->matches(new Constraint('==', '8.2.9999999')) => '^11.5',
-                default => '^12.4',
-            };
+            $php82 = $facts[PhpConstraint::class]->matches(new Constraint('==', '8.2.9999999'));
+            $new['require-dev']['phpunit/phpunit'] = $php82 ? '^11.5' : '^12.4';
+            $new['require-dev']['symfony/var-dumper'] = $php82 ? '^7.4' : '^8.0';
         }
 
         if ($new['type'] === PackageType::PROJECT) {
