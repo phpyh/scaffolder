@@ -17,7 +17,7 @@ enum Readme implements Change
 
     public function decide(Facts $facts, Project $project): ?callable
     {
-        if ($project->exists('README.md')) {
+        if ($project->exists('README.md') && $project->exists('composer.json')) {
             return null;
         }
 
