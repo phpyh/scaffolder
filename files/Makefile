@@ -65,9 +65,9 @@ rescaffold:
 	  --interactive --tty --rm \
 	  --pull always \
 	  ghcr.io/phpyh/scaffolder:latest \
-	  --user-name-default "$(shell git config user.name 2>/dev/null || whoami 2>/dev/null)" \
-	  --user-email-default "$(shell git config user.email 2>/dev/null)" \
-	  --package-project-default "$(shell basename $$(pwd))"
+	  --user-name-default '$(shell git config user.name 2>/dev/null || whoami 2>/dev/null)' \
+	  --user-email-default '$(shell git config user.email 2>/dev/null)' \
+	  --package-project-default '$(shell basename $$(pwd))'
 	git add --all 2>/dev/null || true
 .PHONY: rescaffold
 
