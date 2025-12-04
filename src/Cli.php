@@ -84,4 +84,12 @@ final readonly class Cli
     {
         return $this->style->choice($question, $choices, $default); // @phpstan-ignore return.type
     }
+
+    /**
+     * @param non-empty-string $question
+     */
+    public function confirm(string $question, bool $default = true): bool
+    {
+        return $this->style->confirm($question, $default);
+    }
 }
