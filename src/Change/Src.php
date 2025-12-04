@@ -20,14 +20,8 @@ enum Src implements Change
         }
 
         return static fn(Cli $cli) => $cli->step(
-            'Write `src/index.php`...',
-            static fn() => $project->write('src/index.php', <<<'PHP'
-                <?php
-
-                declare(strict_types=1);
-
-                echo 'Hello world!', PHP_EOL;
-                PHP),
+            'Write `src/.gitignore`...',
+            static fn() => $project->write('src/.gitignore'),
         );
     }
 }
