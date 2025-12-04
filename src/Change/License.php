@@ -6,9 +6,9 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
+use PHPyh\Scaffolder\Fact\CopyrightHolder;
 use PHPyh\Scaffolder\Fact\License as LicenseFact;
 use PHPyh\Scaffolder\Fact\Project;
-use PHPyh\Scaffolder\Fact\UserName;
 use PHPyh\Scaffolder\Facts;
 
 enum License implements Change
@@ -29,7 +29,7 @@ enum License implements Change
         $contents = <<<LICENSE
             MIT License
 
-            Copyright (c) {$year}-present {$facts[UserName::class]}
+            Copyright (c) {$year}-present {$facts[CopyrightHolder::class]}
             
             Permission is hereby granted, free of charge, to any person obtaining a copy
             of this software and associated documentation files (the "Software"), to deal

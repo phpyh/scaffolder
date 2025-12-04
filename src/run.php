@@ -22,9 +22,10 @@ Fact\PackageVendor::configureCommand($app);
 Fact\PackageProject::configureCommand($app);
 Fact\PhpConstraint::configureCommand($app);
 Fact\Authors::configureCommand($app);
-Fact\License::configureCommand($app);
 Fact\UserName::configureCommand($app);
 Fact\UserEmail::configureCommand($app);
+Fact\License::configureCommand($app);
+Fact\CopyrightHolder::configureCommand($app);
 
 $app
     ->setCode(new Command([
