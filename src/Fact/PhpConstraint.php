@@ -18,11 +18,12 @@ use Symfony\Component\Console\Input\InputOption;
  */
 final class PhpConstraint extends Fact implements CommandConfigurator
 {
+    private const string DEFAULT = '^8.4';
     private const string DEFAULT_OPTION = 'php-constraint-default';
 
     public static function configureCommand(Command $command): void
     {
-        $command->addOption(self::DEFAULT_OPTION, mode: InputOption::VALUE_REQUIRED, default: '^8.3');
+        $command->addOption(self::DEFAULT_OPTION, mode: InputOption::VALUE_REQUIRED, default: self::DEFAULT);
     }
 
     public static function resolve(Facts $facts, Cli $cli): ConstraintInterface
