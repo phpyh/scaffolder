@@ -24,7 +24,7 @@ enum GitHubWorkflow implements Change
         ));
         $contents = str_replace(
             "'%matrix%'",
-            \sprintf("['%s']", implode("', '", $facts[PhpImageVersions::class])),
+            \sprintf('[%s]', implode(', ', $facts[PhpImageVersions::class])),
             $contents,
         );
 
