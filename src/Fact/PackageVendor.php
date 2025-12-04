@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 final class PackageVendor extends Fact implements CommandConfigurator
 {
-    private const string DEFAULT_OPTION = 'vendor-default';
+    private const string DEFAULT_OPTION = 'package-vendor-default';
 
     public static function configureCommand(Command $command): void
     {

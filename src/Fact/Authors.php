@@ -17,11 +17,11 @@ use Symfony\Component\Console\Input\InputOption;
  */
 final class Authors extends Fact implements CommandConfigurator
 {
-    private const string OPTION = 'authors';
+    private const string DEFAULT_OPTION = 'authors-default';
 
     public static function configureCommand(Command $command): void
     {
-        $command->addOption(self::OPTION, mode: InputOption::VALUE_REQUIRED);
+        $command->addOption(self::DEFAULT_OPTION, mode: InputOption::VALUE_REQUIRED);
     }
 
     public static function resolve(Facts $facts, Cli $cli): mixed
@@ -32,7 +32,7 @@ final class Authors extends Fact implements CommandConfigurator
             return $composerJson['authors'];
         }
 
-        $option = $cli->getOption(self::OPTION);
+        $option = $cli->getOption(self::DEFAULT_OPTION);
 
         if (\is_string($option)) {
             /** @var list<Author> */

@@ -18,7 +18,7 @@ final class PackageType extends Fact implements CommandConfigurator
 {
     public const string LIBRARY = 'library';
     public const string PROJECT = 'project';
-    private const string DEFAULT_OPTION = 'type-default';
+    private const string DEFAULT_OPTION = 'package-type-default';
 
     public static function configureCommand(Command $command): void
     {
