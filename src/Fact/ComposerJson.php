@@ -21,8 +21,17 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *     "require-dev"?: array<non-empty-string, non-empty-string>,
  *     autoload?: Autoload,
  *     "autoload-dev"?: Autoload,
- *     config?: array{"sort-packages"?: bool, lock?: bool, ...},
+ *     config?: array{
+ *         "sort-packages"?: bool,
+ *         lock?: bool,
+ *         "allow-plugins"?: array<non-empty-string, bool>,
+ *         "platform"?: array<non-empty-string, non-empty-string>,
+ *         "bump-after-update"?: bool|"dev"|"no-dev",
+ *         ...
+ *     },
  *     authors?: list<Author>,
+ *     extra?: array<mixed>,
+ *     scripts?: array<non-empty-string, non-empty-string|list<non-empty-string>>,
  *     ...
  * }
  * @extends Fact<Type>

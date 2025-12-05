@@ -46,9 +46,27 @@ enum ComposerJson implements Change
         if ($new['type'] === PackageType::PROJECT) {
             unset($new['config']['lock']);
             $removeLock = false;
+            $new['config']['bump-after-update'] = true;
         } else {
             $new['config']['lock'] = false;
             $removeLock = $project->exists('composer.lock');
+            unset($new['config']['bump-after-update']);
+        }
+
+        unset(
+            $new['require-dev']['bamarni/composer-bin-plugin'],
+            $new['config']['allow-plugins']['bamarni/composer-bin-plugin'],
+            $new['config']['platform'],
+            $new['extra']['bamarni-bin'],
+            $new['scripts'],
+        );
+
+        if (isset($new['config']['allow-plugins']) && $new['config']['allow-plugins'] === []) { // @phpstan-ignore isset.offset
+            unset($new['config']['allow-plugins']);
+        }
+
+        if (isset($new['extra']) && $new['extra'] === []) { // @phpstan-ignore isset.offset
+            unset($new['extra']);
         }
 
         if ($new === $original && !$removeLock) {
