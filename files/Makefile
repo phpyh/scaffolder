@@ -1,4 +1,4 @@
-SHELL ?= /bin/bash
+SHELL := /bin/bash
 
 DOCKER ?= docker
 DOCKER_COMPOSE ?= $(DOCKER) compose $(shell test -f .env.local && echo '--env-file .env --env-file .env.local')
