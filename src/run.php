@@ -9,7 +9,7 @@ use PHPyh\Scaffolder\Change\GitHubWorkflow;
 use PHPyh\Scaffolder\Change\PHPCSFixer;
 use PHPyh\Scaffolder\Change\PHPStan;
 use PHPyh\Scaffolder\Change\Rector;
-use PHPyh\Scaffolder\Change\RemoveFile;
+use PHPyh\Scaffolder\Change\Remove;
 use Symfony\Component\Console\SingleCommandApplication;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -45,7 +45,8 @@ $app
         Change\Tests::Change,
         Examples::Change,
         GitHubWorkflow::Change,
-        new RemoveFile('.github/workflows/check.yml'),
+        new Remove('.github/workflows/check.yml'),
+        new Remove('tools'),
         PHPCSFixer::Change,
         PHPStan::Change,
         Rector::Change,
