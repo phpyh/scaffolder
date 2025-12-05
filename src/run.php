@@ -47,6 +47,7 @@ $app
         GitHubWorkflow::Change,
         new Remove('.github/workflows/check.yml'),
         new Remove('tools'),
+        new Remove('psalm.xml.dist'),
         PHPCSFixer::Change,
         PHPStan::Change,
         Rector::Change,
