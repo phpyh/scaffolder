@@ -27,12 +27,12 @@ final class Namespace_ extends Fact
 
         return $cli->ask(
             question: 'Namespace',
-            default: self::pascalize($facts[PackageVendor::class]) . '\\' . self::pascalize($facts[PackageProject::class]),
+            default: $facts[VendorNamespace::class] . '\\' . self::pascalize($facts[PackageProject::class]),
             normalizer: self::normalize(...),
         );
     }
 
-    private static function normalize(string $namespace): string
+    public static function normalize(string $namespace): string
     {
         if ($namespace === '' || preg_match(self::REGEX, $namespace) === 1) {
             return $namespace;
@@ -41,7 +41,7 @@ final class Namespace_ extends Fact
         throw new \InvalidArgumentException('Invalid namespace');
     }
 
-    private static function pascalize(string $name): string
+    public static function pascalize(string $name): string
     {
         $namespace = preg_replace_callback(
             '~[-_.]+(\w)~',

@@ -26,6 +26,7 @@ Fact\UserName::configureCommand($app);
 Fact\UserEmail::configureCommand($app);
 Fact\License::configureCommand($app);
 Fact\CopyrightHolder::configureCommand($app);
+Fact\VendorNamespace::configureCommand($app);
 
 $app
     ->setCode(new Command([
