@@ -4,7 +4,7 @@
 docker run \
   --volume .:/project \
   --user $(id -u):$(id -g) \
-  --interactive --tty --rm \
+  --interactive --tty --rm --init \
   --pull always \
   ghcr.io/phpyh/scaffolder:latest \
   --user-name-default "$(git config user.name 2>/dev/null || whoami 2>/dev/null)" \

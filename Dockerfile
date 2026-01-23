@@ -11,4 +11,4 @@ EOF
 
 WORKDIR /project
 
-ENTRYPOINT ["tini", "--", "php", "/scaffolder/src/run.php"]
+ENTRYPOINT ["php", "/scaffolder/src/run.php"]
