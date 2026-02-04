@@ -28,18 +28,42 @@ final class Namespace_ extends Fact
 
         return $cli->ask(
             question: 'Namespace',
-            default: $facts[VendorNamespace::class] . '\\' . self::pascalize($facts[PackageProject::class]),
+            default: self::resolveDefault($facts),
             normalizer: self::normalize(...),
         );
     }
 
+    private static function resolveDefault(Facts $facts): ?string
+    {
+        $projectNamespace = self::pascalize($facts[PackageProject::class]);
+
+        $default = $facts[VendorNamespace::class] . '\\' . $projectNamespace;
+
+        if (self::isValid($default)) {
+            return $default;
+        }
+
+        $default = $facts[VendorNamespace::class] . $projectNamespace;
+
+        if (self::isValid($default)) {
+            return $default;
+        }
+
+        return null;
+    }
+
+    private static function isValid(string $namespace): bool
+    {
+        return preg_match(self::REGEX, $namespace) === 1;
+    }
+
     public static function normalize(string $namespace): string
     {
-        if ($namespace === '' || preg_match(self::REGEX, $namespace) === 1) {
+        if ($namespace === '' || self::isValid($namespace)) {
             return $namespace;
         }
 
-        throw new \InvalidArgumentException('Invalid namespace');
+        throw new \InvalidArgumentException(\sprintf('Invalid namespace `%s`', $namespace));
     }
 
     public static function pascalize(string $name): string
