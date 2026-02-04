@@ -13,7 +13,8 @@ use PHPyh\Scaffolder\Facts;
  */
 final class Namespace_ extends Fact
 {
-    private const string REGEX = '/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*+(?>\\\[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*+)++$/';
+    private const string NAME = '[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*+';
+    private const string REGEX = '/^' . self::NAME . '(?>\\\\' . self::NAME . ')*+$/';
 
     public static function resolve(Facts $facts, Cli $cli): string
     {
