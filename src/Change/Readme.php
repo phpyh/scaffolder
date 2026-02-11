@@ -23,8 +23,8 @@ enum Readme implements Change
         }
 
         $command = match ($facts[PackageType::class]) {
-            PackageType::LIBRARY => "composer require {$facts[Package::class]}",
             PackageType::PROJECT => "composer create-project {$facts[Package::class]}",
+            default => "composer require {$facts[Package::class]}",
         };
 
         $contents = <<<MD
