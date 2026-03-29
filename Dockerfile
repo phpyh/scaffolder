@@ -11,4 +11,4 @@ EOF
 
 WORKDIR /project
 
-ENTRYPOINT ["php", "/scaffolder/src/run.php"]
+ENTRYPOINT ["php", "/scaffolder/bin/run.php"]

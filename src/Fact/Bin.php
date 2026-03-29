@@ -11,18 +11,14 @@ use PHPyh\Scaffolder\Facts;
 /**
  * @extends Fact<bool>
  */
-final class Examples extends Fact
+final class Bin extends Fact
 {
     public static function resolve(Facts $facts, Cli $cli): bool
     {
-        if ($facts[Project::class]->exists('examples')) {
+        if ($facts[Project::class]->exists('bin')) {
             return true;
         }
 
-        if ($facts[PackageType::class] !== PackageType::LIBRARY) {
-            return false;
-        }
-
-        return $cli->confirm('Add `examples` directory?');
+        return $cli->confirm('Add `bin` directory?');
     }
 }

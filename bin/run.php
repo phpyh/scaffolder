@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace PHPyh\Scaffolder;
 
-use PHPyh\Scaffolder\Change\Examples;
-use PHPyh\Scaffolder\Change\GitHubWorkflow;
-use PHPyh\Scaffolder\Change\PHPCSFixer;
-use PHPyh\Scaffolder\Change\PHPStan;
-use PHPyh\Scaffolder\Change\Rector;
-use PHPyh\Scaffolder\Change\Remove;
 use Symfony\Component\Console\SingleCommandApplication;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -44,13 +38,14 @@ $app
         Change\Readme::Change,
         Change\Src::Change,
         Change\Tests::Change,
-        Examples::Change,
-        GitHubWorkflow::Change,
-        new Remove('.github/workflows/check.yml'),
-        new Remove('tools'),
-        new Remove('psalm.xml.dist'),
-        PHPCSFixer::Change,
-        PHPStan::Change,
-        Rector::Change,
+        Change\Bin::Change,
+        Change\Examples::Change,
+        Change\GitHubWorkflow::Change,
+        new Change\Remove('.github/workflows/check.yml'),
+        new Change\Remove('tools'),
+        new Change\Remove('psalm.xml.dist'),
+        Change\PHPCSFixer::Change,
+        Change\PHPStan::Change,
+        Change\Rector::Change,
     ]))
     ->run();

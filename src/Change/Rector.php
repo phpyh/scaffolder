@@ -6,6 +6,7 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
+use PHPyh\Scaffolder\Fact\Bin;
 use PHPyh\Scaffolder\Fact\Examples;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Facts;
@@ -18,6 +19,11 @@ enum Rector implements Change
     public function decide(Facts $facts, Project $project): ?callable
     {
         $contents = $project->read(__DIR__ . '/../../files/' . self::FILE);
+
+        if (!$facts[Bin::class]) {
+            $contents = preg_replace("/.*bin.*\n/", '', $contents);
+            \assert($contents !== null);
+        }
 
         if (!$facts[Examples::class]) {
             $contents = preg_replace("/.*examples.*\n/", '', $contents);
