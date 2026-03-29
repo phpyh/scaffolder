@@ -61,12 +61,7 @@ composer: ## Run Composer command: `make c CMD=start`
 .PHONY: c composer
 
 rescaffold:
-	$(DOCKER) run \
-	  --volume .:/project \
-	  --user $(CONTAINER_USER) \
-	  --interactive --tty --rm --init \
-	  --pull always \
-	  ghcr.io/phpyh/scaffolder:latest \
+	$(RUN) php bin/run.php \
 	  --user-name-default '$(shell git config user.name 2>/dev/null || whoami 2>/dev/null)' \
 	  --user-email-default '$(shell git config user.email 2>/dev/null)' \
 	  --package-project-default '$(shell basename $$(pwd))'
