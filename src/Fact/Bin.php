@@ -19,6 +19,10 @@ final class Bin extends Fact
             return true;
         }
 
-        return $cli->confirm('Add `bin` directory?');
+        if ($facts[Rescaffold::class]) {
+            return false;
+        }
+
+        return $cli->confirm('Add `bin` directory?', default: false);
     }
 }

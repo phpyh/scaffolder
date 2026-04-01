@@ -23,6 +23,10 @@ final class Examples extends Fact
             return false;
         }
 
+        if ($facts[Rescaffold::class]) {
+            return false;
+        }
+
         return $cli->confirm('Add `examples` directory?');
     }
 }
