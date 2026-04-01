@@ -6,7 +6,9 @@
 
 * export-ignore
 /bin/ -export-ignore
-/bin/hot-reload -export-ignore
+/bin/** -export-ignore
+/examples/ -export-ignore
+/examples/** -export-ignore
 /src/ -export-ignore
 /src/** -export-ignore
 /CHANGELOG.md -export-ignore

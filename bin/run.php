@@ -26,7 +26,6 @@ $app
     ->setCode(new Command([
         Change\ComposerJson::Change,
         new Change\CopyFile(__DIR__ . '/../files/.devcontainer.json', '.devcontainer.json'),
-        new Change\CopyFile(__DIR__ . '/../files/.gitattributes', '.gitattributes'),
         new Change\CopyFile(__DIR__ . '/../files/.gitignore', '.gitignore'),
         new Change\CopyFile(__DIR__ . '/../files/compose.yaml', 'compose.yaml'),
         new Change\CopyFile(__DIR__ . '/../files/infection.json5.dist', 'infection.json5.dist'),
@@ -40,6 +39,7 @@ $app
         Change\Tests::Change,
         Change\Bin::Change,
         Change\Examples::Change,
+        Change\Gitattributes::Change,
         Change\GitHubWorkflow::Change,
         new Change\Remove('.github/workflows/check.yml'),
         new Change\Remove('tools'),
