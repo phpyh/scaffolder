@@ -15,6 +15,6 @@ final class Rescaffold extends Fact
 {
     public static function resolve(Facts $facts, Cli $cli): mixed
     {
-        return !$facts[Project::class]->exists('composer.json');
+        return $facts[Project::class]->exists('composer.json');
     }
 }
