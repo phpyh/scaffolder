@@ -28,12 +28,13 @@ final class PhpConstraint extends Fact implements CommandConfigurator
 
     public static function resolve(Facts $facts, Cli $cli): ConstraintInterface
     {
-        $composerJson = $facts[ComposerJson::class];
+        $constraint = self::findPhpConstraint($facts[ComposerJson::class]['require'] ?? []);
 
-        if (isset($composerJson['require']['php'])) {
+        if ($constraint !== null) {
             try {
-                return self::normalize($composerJson['require']['php']);
+                return self::normalize($constraint);
             } catch (\InvalidArgumentException) {
+                // noop
             }
         }
 
@@ -45,6 +46,26 @@ final class PhpConstraint extends Fact implements CommandConfigurator
             default: $default,
             normalizer: self::normalize(...),
         );
+    }
+
+    public static function isPhpPackage(string $package): bool
+    {
+        return $package === 'php' || str_starts_with($package, 'php-');
+    }
+
+    /**
+     * @param array<non-empty-string, non-empty-string> $require
+     * @return ?non-empty-string
+     */
+    private static function findPhpConstraint(array $require): ?string
+    {
+        foreach ($require as $package => $constraint) {
+            if (self::isPhpPackage($package) && $constraint !== '*') {
+                return $constraint;
+            }
+        }
+
+        return null;
     }
 
     private static function normalize(string $constraint): ConstraintInterface

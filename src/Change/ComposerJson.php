@@ -31,7 +31,11 @@ enum ComposerJson implements Change
         $new['description'] ??= $facts[Title::class];
         $new['type'] = $facts[PackageType::class];
         $new['authors'] ??= $facts[Authors::class];
-        $new['require']['php'] ??= $facts[PhpConstraint::class]->getPrettyString();
+
+        if (!array_any(array_keys($new['require'] ?? []), PhpConstraint::isPhpPackage(...))) {
+            $new['require']['php'] ??= $facts[PhpConstraint::class]->getPrettyString();
+        }
+
         $new['config']['sort-packages'] = true;
         $new['license'] = $facts[License::class];
 
