@@ -4,7 +4,6 @@
          beStrictAboutOutputDuringTests="true"
          bootstrap="vendor/autoload.php"
          cacheDirectory="var/phpunit"
-         defaultTestSuite="default"
          displayDetailsOnAllIssues="true"
          failOnIncomplete="true"
          failOnNotice="true"
