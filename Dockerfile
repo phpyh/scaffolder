@@ -1,22 +1,11 @@
-FROM php:8.5-cli-alpine AS builder
+FROM php:8.5-cli-alpine
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
-WORKDIR /scaffolder
-
-COPY . ./
-
-RUN --mount=type=cache,target=/root/.composer/cache <<EOF
-    set -eux
-    composer install --no-dev --classmap-authoritative
-EOF
-
-FROM php:8.5-cli-alpine
+ENV LC_ALL=C.UTF-8
 
 ENV UID=10001
 ENV GID=10001
-
-ENV LC_ALL=C.UTF-8
 
 RUN <<EOF
     set -eux
@@ -26,8 +15,15 @@ EOF
 
 USER dev
 
-WORKDIR /project
+WORKDIR /scaffolder
 
-COPY --from=builder --chown=dev:dev /scaffolder /scaffolder
+COPY . ./
+
+RUN --mount=type=cache,target=/home/dev/.composer/cache <<EOF
+    set -eux
+    composer install --no-dev --classmap-authoritative
+EOF
+
+WORKDIR /project
 
 ENTRYPOINT ["php", "/scaffolder/bin/run.php"]
