@@ -25,7 +25,6 @@ Fact\VendorNamespace::configureCommand($app);
 $app
     ->setCode(new Command([
         Change\ComposerJson::Change,
-        new Change\CopyFile(__DIR__ . '/../files/.devcontainer.json', '.devcontainer.json'),
         new Change\CopyFile(__DIR__ . '/../files/.gitignore', '.gitignore'),
         new Change\CopyFile(__DIR__ . '/../files/compose.yaml', 'compose.yaml'),
         new Change\CopyFile(__DIR__ . '/../files/infection.json5.dist', 'infection.json5.dist'),
@@ -44,6 +43,7 @@ $app
         new Change\Remove('.github/workflows/check.yml'),
         new Change\Remove('tools'),
         new Change\Remove('psalm.xml.dist'),
+        new Change\Remove('.devcontainer.json'),
         Change\PHPCSFixer::Change,
         Change\PHPStan::Change,
         Change\Rector::Change,
