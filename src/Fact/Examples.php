@@ -23,7 +23,7 @@ final class Examples extends Fact
             return false;
         }
 
-        if ($facts[Rescaffold::class]) {
+        if ($facts[IsRescaffolding::class]) {
             return false;
         }
 

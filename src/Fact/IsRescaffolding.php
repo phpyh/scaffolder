@@ -11,7 +11,7 @@ use PHPyh\Scaffolder\Facts;
 /**
  * @extends Fact<bool>
  */
-final class Rescaffold extends Fact
+final class IsRescaffolding extends Fact
 {
     public static function resolve(Facts $facts, Cli $cli): mixed
     {

@@ -19,7 +19,7 @@ final class Bin extends Fact
             return true;
         }
 
-        if ($facts[Rescaffold::class]) {
+        if ($facts[IsRescaffolding::class]) {
             return false;
         }
 
