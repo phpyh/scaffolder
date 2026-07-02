@@ -1,0 +1,22 @@
+name: Cleanup Docker images
+
+on:
+  workflow_dispatch: ~
+  schedule:
+    - cron: '0 3 * * 0'
+
+permissions:
+  packages: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete old untagged image versions
+        uses: snok/container-retention-policy@v3
+        with:
+          account: phpyh
+          token: ${{ secrets.GITHUB_TOKEN }}
+          image-names: scaffolder
+          tag-selection: untagged
+          cut-off: 1w
