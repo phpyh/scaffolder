@@ -27,7 +27,7 @@ $app
         Change\ComposerJson::Change,
         new Change\CopyFile(__DIR__ . '/../files/compose.yaml', 'compose.yaml'),
         new Change\CopyFile(__DIR__ . '/../files/infection.json5.dist', 'infection.json5.dist'),
-        new Change\CopyFileIfNotExists(__DIR__ . '/../files/CHANGELOG.md', 'CHANGELOG.md'),
+        Change\Changelog::Change,
         Change\Makefile::Change,
         Change\License::Change,
         Change\Gitignore::Change,
