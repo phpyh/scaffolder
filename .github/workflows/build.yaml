@@ -12,6 +12,9 @@ concurrency:
   group: build
   cancel-in-progress: true
 
+env:
+  IMAGE: ghcr.io/phpyh/scaffolder
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -41,8 +44,10 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/phpyh/scaffolder:latest
-          push: ${{ github.ref == 'refs/heads/main' && github.repository_owner == 'phpyh' }}
+          tags: |
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:sha-${{ github.sha }}
+          push: ${{ github.ref == 'refs/heads/main' }}
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.created=${{ steps.timestamp.outputs.rfc3339 }}
