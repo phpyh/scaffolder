@@ -25,7 +25,7 @@ Fact\VendorNamespace::configureCommand($app);
 $app
     ->setCode(new Command([
         Change\ComposerJson::Change,
-        new Change\CopyFile(__DIR__ . '/../files/compose.yaml', 'compose.yaml'),
+        Change\Compose::Change,
         new Change\CopyFile(__DIR__ . '/../files/infection.json5.dist', 'infection.json5.dist'),
         Change\Changelog::Change,
         Change\Makefile::Change,
