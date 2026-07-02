@@ -50,7 +50,7 @@ final class PackageVendor extends Fact implements CommandConfigurator
     private static function normalize(string $vendor): string
     {
         if (preg_match('~^[a-z0-9]([_.-]?[a-z0-9]+)*$~D', $vendor) === 1) {
-            return $vendor; // @phpstan-ignore return.type
+            return $vendor;
         }
 
         throw new \InvalidArgumentException('Invalid vendor');

@@ -71,7 +71,7 @@ phpstan: var vendor ## Run static analysis
 .PHONY: phpstan
 
 test: var vendor up ## Run the test suite
-	$(RUN) vendor/bin/phpunit $(ARGS)
+	$(RUN) vendor/bin/testo $(ARGS)
 .PHONY: test
 
 infect: var vendor up ## Run mutation testing

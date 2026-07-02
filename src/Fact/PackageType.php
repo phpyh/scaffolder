@@ -49,7 +49,7 @@ final class PackageType extends Fact implements CommandConfigurator
     private static function normalize(string $type): string
     {
         if (preg_match('~^[a-z0-9-]+$~D', $type) === 1) {
-            return $type; // @phpstan-ignore return.type
+            return $type;
         }
 
         throw new \InvalidArgumentException('Invalid package type');

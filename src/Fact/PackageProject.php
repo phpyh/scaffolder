@@ -56,7 +56,7 @@ final class PackageProject extends Fact
     private static function normalize(string $project): string
     {
         if (preg_match('~^' . self::PATTERN . '$~D', $project) === 1) {
-            return $project; // @phpstan-ignore return.type
+            return $project;
         }
 
         throw new \InvalidArgumentException('Invalid project name');
