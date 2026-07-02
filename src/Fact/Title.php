@@ -18,7 +18,7 @@ final class Title extends Fact
         $description = preg_replace_callback(
             '~[-_./]+(\w)~',
             static fn(array $matches) => ' ' . strtoupper($matches[1]),
-            $facts[Package::class],
+            $facts[PackageName::class],
         );
         \assert($description !== null && $description !== '');
 

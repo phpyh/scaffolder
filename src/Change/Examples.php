@@ -6,7 +6,7 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
-use PHPyh\Scaffolder\Fact\Examples as ExamplesFact;
+use PHPyh\Scaffolder\Fact\HasExamples;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Facts;
 
@@ -20,7 +20,7 @@ enum Examples implements Change
             return null;
         }
 
-        if (!$facts[ExamplesFact::class]) {
+        if (!$facts[HasExamples::class]) {
             return null;
         }
 

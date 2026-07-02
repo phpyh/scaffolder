@@ -6,8 +6,8 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
-use PHPyh\Scaffolder\Fact\Bin;
-use PHPyh\Scaffolder\Fact\Examples;
+use PHPyh\Scaffolder\Fact\HasBin;
+use PHPyh\Scaffolder\Fact\HasExamples;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Fact\UseTesto;
 use PHPyh\Scaffolder\Facts;
@@ -21,12 +21,12 @@ enum PHPStan implements Change
     {
         $contents = $project->read(__DIR__ . '/../../files/' . self::FILE);
 
-        if (!$facts[Bin::class]) {
+        if (!$facts[HasBin::class]) {
             $contents = preg_replace("/.*bin.*\n/", '', $contents);
             \assert($contents !== null);
         }
 
-        if (!$facts[Examples::class]) {
+        if (!$facts[HasExamples::class]) {
             $contents = preg_replace("/.*examples.*\n/", '', $contents);
             \assert($contents !== null);
         }

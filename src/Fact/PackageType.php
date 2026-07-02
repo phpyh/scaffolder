@@ -27,7 +27,7 @@ final class PackageType extends Fact implements CommandConfigurator
 
     public static function resolve(Facts $facts, Cli $cli): mixed
     {
-        $composerJson = $facts[ComposerJson::class];
+        $composerJson = $facts[ComposerJsonContents::class];
 
         if (isset($composerJson['type'])) {
             return $composerJson['type'];

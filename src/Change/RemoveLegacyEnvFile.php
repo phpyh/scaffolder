@@ -9,7 +9,7 @@ use PHPyh\Scaffolder\Cli;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Facts;
 
-enum RemoveDotEnv implements Change
+enum RemoveLegacyEnvFile implements Change
 {
     case Change;
     private const string FILE = '.env';

@@ -12,7 +12,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * @phpstan-import-type Author from ComposerJson
+ * @phpstan-import-type Author from ComposerJsonContents
  * @extends Fact<list<Author>>
  */
 final class Authors extends Fact implements CommandConfigurator
@@ -26,7 +26,7 @@ final class Authors extends Fact implements CommandConfigurator
 
     public static function resolve(Facts $facts, Cli $cli): mixed
     {
-        $composerJson = $facts[ComposerJson::class];
+        $composerJson = $facts[ComposerJsonContents::class];
 
         if (isset($composerJson['authors'])) {
             return $composerJson['authors'];

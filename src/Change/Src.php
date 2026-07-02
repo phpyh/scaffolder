@@ -6,8 +6,8 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
-use PHPyh\Scaffolder\Fact\Namespace_;
 use PHPyh\Scaffolder\Fact\Project;
+use PHPyh\Scaffolder\Fact\RootNamespace;
 use PHPyh\Scaffolder\Facts;
 
 enum Src implements Change
@@ -29,7 +29,7 @@ enum Src implements Change
 
                     declare(strict_types=1);
 
-                    namespace {$facts[Namespace_::class]};
+                    namespace {$facts[RootNamespace::class]};
 
                     echo 'Hello world!', PHP_EOL;
                     PHP,

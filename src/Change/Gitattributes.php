@@ -6,9 +6,9 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
-use PHPyh\Scaffolder\Fact\Bin;
-use PHPyh\Scaffolder\Fact\Docs;
-use PHPyh\Scaffolder\Fact\Examples;
+use PHPyh\Scaffolder\Fact\HasBin;
+use PHPyh\Scaffolder\Fact\HasDocs;
+use PHPyh\Scaffolder\Fact\HasExamples;
 use PHPyh\Scaffolder\Fact\PackageType;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Facts;
@@ -33,17 +33,17 @@ enum Gitattributes implements Change
 
         $contents = $project->read(__DIR__ . '/../../files/' . self::FILE);
 
-        if (!$facts[Bin::class]) {
+        if (!$facts[HasBin::class]) {
             $contents = preg_replace("~^/bin/.*\n~m", '', $contents);
             \assert($contents !== null);
         }
 
-        if (!$facts[Docs::class]) {
+        if (!$facts[HasDocs::class]) {
             $contents = preg_replace("~^/docs/.*\n~m", '', $contents);
             \assert($contents !== null);
         }
 
-        if (!$facts[Examples::class]) {
+        if (!$facts[HasExamples::class]) {
             $contents = preg_replace("~^/examples/.*\n~m", '', $contents);
             \assert($contents !== null);
         }

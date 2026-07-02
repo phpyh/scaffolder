@@ -25,7 +25,7 @@ final class PackageProject extends Fact
 
     public static function resolve(Facts $facts, Cli $cli): mixed
     {
-        $composerJson = $facts[ComposerJson::class];
+        $composerJson = $facts[ComposerJsonContents::class];
 
         if (isset($composerJson['name'])) {
             try {

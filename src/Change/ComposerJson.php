@@ -8,13 +8,13 @@ use Composer\Semver\Constraint\Constraint;
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
 use PHPyh\Scaffolder\Fact\Authors;
-use PHPyh\Scaffolder\Fact\ComposerJson as ComposerJsonFact;
+use PHPyh\Scaffolder\Fact\ComposerJsonContents;
 use PHPyh\Scaffolder\Fact\License;
-use PHPyh\Scaffolder\Fact\Namespace_;
-use PHPyh\Scaffolder\Fact\Package;
+use PHPyh\Scaffolder\Fact\PackageName;
 use PHPyh\Scaffolder\Fact\PackageType;
 use PHPyh\Scaffolder\Fact\PhpConstraint;
 use PHPyh\Scaffolder\Fact\Project;
+use PHPyh\Scaffolder\Fact\RootNamespace;
 use PHPyh\Scaffolder\Fact\Title;
 use PHPyh\Scaffolder\Fact\UseTesto;
 use PHPyh\Scaffolder\Facts;
@@ -26,9 +26,9 @@ enum ComposerJson implements Change
 
     public function decide(Facts $facts, Project $project): ?callable
     {
-        $new = $original = $facts[ComposerJsonFact::class];
+        $new = $original = $facts[ComposerJsonContents::class];
 
-        $new['name'] = $facts[Package::class];
+        $new['name'] = $facts[PackageName::class];
         $new['description'] ??= $facts[Title::class];
         $new['type'] = $facts[PackageType::class];
         $new['authors'] ??= $facts[Authors::class];
@@ -41,8 +41,8 @@ enum ComposerJson implements Change
         $new['license'] = $facts[License::class];
 
         if (!$project->exists('composer.json')) {
-            $new['autoload']['psr-4'][$facts[Namespace_::class] . '\\'] = 'src/';
-            $new['autoload-dev']['psr-4'][$facts[Namespace_::class] . '\\'] = 'tests/';
+            $new['autoload']['psr-4'][$facts[RootNamespace::class] . '\\'] = 'src/';
+            $new['autoload-dev']['psr-4'][$facts[RootNamespace::class] . '\\'] = 'tests/';
             $php82 = $facts[PhpConstraint::class]->matches(new Constraint('==', '8.2.9999999'));
             $php83 = $facts[PhpConstraint::class]->matches(new Constraint('==', '8.3.9999999'));
             $new['require-dev']['symfony/var-dumper'] = ($php82 || $php83) ? '^7.4' : '^8.0';

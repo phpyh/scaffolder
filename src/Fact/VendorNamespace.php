@@ -31,11 +31,11 @@ final class VendorNamespace extends Fact implements CommandConfigurator
             \assert(\is_string($option));
 
             try {
-                return Namespace_::normalize($option);
+                return RootNamespace::normalize($option);
             } catch (\InvalidArgumentException) {
             }
         }
 
-        return Namespace_::pascalize($facts[PackageVendor::class]);
+        return RootNamespace::pascalize($facts[PackageVendor::class]);
     }
 }

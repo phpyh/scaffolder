@@ -36,7 +36,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  * }
  * @extends Fact<Type>
  */
-final class ComposerJson extends Fact
+final class ComposerJsonContents extends Fact
 {
     public static function resolve(Facts $facts, Cli $cli): mixed
     {

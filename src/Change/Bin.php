@@ -6,7 +6,7 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
-use PHPyh\Scaffolder\Fact\Bin as BinFact;
+use PHPyh\Scaffolder\Fact\HasBin;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Facts;
 
@@ -20,7 +20,7 @@ enum Bin implements Change
             return null;
         }
 
-        if (!$facts[BinFact::class]) {
+        if (!$facts[HasBin::class]) {
             return null;
         }
 

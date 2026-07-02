@@ -28,7 +28,7 @@ final class PhpConstraint extends Fact implements CommandConfigurator
 
     public static function resolve(Facts $facts, Cli $cli): ConstraintInterface
     {
-        $constraint = self::findPhpConstraint($facts[ComposerJson::class]['require'] ?? []);
+        $constraint = self::findPhpConstraint($facts[ComposerJsonContents::class]['require'] ?? []);
 
         if ($constraint !== null) {
             try {

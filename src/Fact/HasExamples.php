@@ -11,7 +11,7 @@ use PHPyh\Scaffolder\Facts;
 /**
  * @extends Fact<bool>
  */
-final class Examples extends Fact
+final class HasExamples extends Fact
 {
     public static function resolve(Facts $facts, Cli $cli): bool
     {

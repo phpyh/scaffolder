@@ -11,7 +11,7 @@ use PHPyh\Scaffolder\Fact\PhpImageVersions;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Facts;
 
-enum GitHubWorkflow implements Change
+enum CheckWorkflow implements Change
 {
     case Change;
     private const string FILE = '.github/workflows/check.yaml';

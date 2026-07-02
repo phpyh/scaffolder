@@ -26,7 +26,7 @@ final class License extends Fact implements CommandConfigurator
 
     public static function resolve(Facts $facts, Cli $cli): mixed
     {
-        $composerJson = $facts[ComposerJson::class];
+        $composerJson = $facts[ComposerJsonContents::class];
 
         if (isset($composerJson['license'])) {
             return $composerJson['license'];

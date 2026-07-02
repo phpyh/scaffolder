@@ -6,7 +6,7 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
-use PHPyh\Scaffolder\Fact\Package;
+use PHPyh\Scaffolder\Fact\PackageName;
 use PHPyh\Scaffolder\Fact\PackageType;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Fact\Title;
@@ -23,8 +23,8 @@ enum Readme implements Change
         }
 
         $command = match ($facts[PackageType::class]) {
-            PackageType::PROJECT => "composer create-project {$facts[Package::class]}",
-            default => "composer require {$facts[Package::class]}",
+            PackageType::PROJECT => "composer create-project {$facts[PackageName::class]}",
+            default => "composer require {$facts[PackageName::class]}",
         };
 
         $contents = <<<MD

@@ -11,7 +11,7 @@ use PHPyh\Scaffolder\Facts;
 /**
  * @extends Fact<non-empty-string>
  */
-final class Package extends Fact
+final class PackageName extends Fact
 {
     public static function resolve(Facts $facts, Cli $cli): mixed
     {
