@@ -25,13 +25,12 @@ Fact\VendorNamespace::configureCommand($app);
 $app
     ->setCode(new Command([
         Change\ComposerJson::Change,
-        new Change\CopyFile(__DIR__ . '/../files/.gitignore', '.gitignore'),
         new Change\CopyFile(__DIR__ . '/../files/compose.yaml', 'compose.yaml'),
         new Change\CopyFile(__DIR__ . '/../files/infection.json5.dist', 'infection.json5.dist'),
-        new Change\CopyFile(__DIR__ . '/../files/Makefile', 'Makefile'),
-        new Change\CopyFile(__DIR__ . '/../files/phpunit.xml.dist', 'phpunit.xml.dist'),
         new Change\CopyFileIfNotExists(__DIR__ . '/../files/CHANGELOG.md', 'CHANGELOG.md'),
+        Change\Makefile::Change,
         Change\License::Change,
+        Change\Gitignore::Change,
         Change\Readme::Change,
         Change\Src::Change,
         Change\Tests::Change,
@@ -47,5 +46,6 @@ $app
         Change\PHPCSFixer::Change,
         Change\PHPStan::Change,
         Change\Rector::Change,
+        Change\Testo::Change,
     ]))
     ->run();

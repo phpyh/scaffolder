@@ -6,36 +6,23 @@ namespace PHPyh\Scaffolder\Change;
 
 use PHPyh\Scaffolder\Change;
 use PHPyh\Scaffolder\Cli;
-use PHPyh\Scaffolder\Fact\Bin;
-use PHPyh\Scaffolder\Fact\Examples;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Fact\UseTesto;
 use PHPyh\Scaffolder\Facts;
 
-enum PHPStan implements Change
+enum Gitignore implements Change
 {
     case Change;
-    private const string FILE = 'phpstan.dist.neon';
+    private const string FILE = '.gitignore';
 
     public function decide(Facts $facts, Project $project): ?callable
     {
         $contents = $project->read(__DIR__ . '/../../files/' . self::FILE);
 
-        if (!$facts[Bin::class]) {
-            $contents = preg_replace("/.*bin.*\n/", '', $contents);
-            \assert($contents !== null);
-        }
-
-        if (!$facts[Examples::class]) {
-            $contents = preg_replace("/.*examples.*\n/", '', $contents);
-            \assert($contents !== null);
-        }
-
         if ($facts[UseTesto::class]) {
             $contents = str_replace(
                 <<<'TEXT'
-                        - /composer/vendor/phpstan/phpstan-phpunit/extension.neon
-                        - /composer/vendor/phpstan/phpstan-phpunit/rules.neon
+                    /phpunit.xml
 
                     TEXT,
                 '',

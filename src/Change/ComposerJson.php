@@ -16,6 +16,7 @@ use PHPyh\Scaffolder\Fact\PackageType;
 use PHPyh\Scaffolder\Fact\PhpConstraint;
 use PHPyh\Scaffolder\Fact\Project;
 use PHPyh\Scaffolder\Fact\Title;
+use PHPyh\Scaffolder\Fact\UseTesto;
 use PHPyh\Scaffolder\Facts;
 
 enum ComposerJson implements Change
@@ -44,8 +45,12 @@ enum ComposerJson implements Change
             $new['autoload-dev']['psr-4'][$facts[Namespace_::class] . '\\'] = 'tests/';
             $php82 = $facts[PhpConstraint::class]->matches(new Constraint('==', '8.2.9999999'));
             $php83 = $facts[PhpConstraint::class]->matches(new Constraint('==', '8.3.9999999'));
-            $new['require-dev']['phpunit/phpunit'] = $php82 ? '^11.5' : '^12.4';
             $new['require-dev']['symfony/var-dumper'] = ($php82 || $php83) ? '^7.4' : '^8.0';
+        }
+
+        if ($facts[UseTesto::class]) {
+            unset($new['require-dev']['phpunit/phpunit']);
+            $new['require-dev']['testo/testo'] = '^0.10.29';
         }
 
         if ($new['type'] === PackageType::PROJECT) {
